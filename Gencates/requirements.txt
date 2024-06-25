@@ -1,0 +1,4 @@
+#pythonpy
+djangorestframework==3.14.0
+requests==2.30.0
+django-cors-headers==3.14.0
