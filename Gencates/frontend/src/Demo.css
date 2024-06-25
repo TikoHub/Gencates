@@ -1,0 +1,140 @@
+/* src/Demo.css */
+
+@font-face {
+  font-family: 'PixelFont';
+  src: url('./fonts/Font Over.otf') format('truetype'); /* Убедитесь, что путь к шрифту правильный */
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background: #1D97A6;
+}
+
+.game_page {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cat_avatar {
+  width: 250px;
+  height: 250px;
+  border-radius: 25px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.game_view {
+  font-size: 42px;
+  color: #0F5272;
+  font-family: 'PixelFont';
+  margin-bottom: 100px;
+  margin-top: 200px;
+}
+
+.welcome_view {
+  font-size: 32px;
+  color: #0F5272;
+  font-family: 'PixelFont';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.info_block {
+  width: 80%;
+  font-size: 20px;
+  color: #0F5272;
+  border: 2px solid #0F5272;
+  border-radius: 25px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 80%;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress-bar_lvl {
+  width: 80%;
+  height: 30px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress {
+  height: 100%;
+  background-color: #0F5272;
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-text {
+  position: absolute;
+  left: 45%;
+  font-size: 24px;
+}
+
+.loading {
+  text-align: center;
+}
+
+.lvl_info_block {
+  font-size: 20px;
+  color: #0F5272;
+  margin-top: 5px;
+}
+
+.referal_info {
+  font-size: 26px;
+  color: #0F5272;
+}
+
+.ref_button {
+  all: unset;
+}
+
+.referal_block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 20px;
+}
+
+.invite_button {
+  width: 120px;
+  height: 48px;
+  border: 2px solid #0F5272;
+  background: #1D97A6;
+  color: #0F5272;
+  font-size: 24px;
+  border-radius: 10px;
+}
+
+.bonus_block {
+  margin-top: 40px;
+  width: 80%;
+  height: 100px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  color: #0F5272;
+  border: 2px solid #0F5272;
+  border-radius: 10px;
+}
