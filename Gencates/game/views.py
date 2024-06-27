@@ -17,7 +17,8 @@ from django.http import JsonResponse
 import requests
 
 TELEGRAM_BOT_TOKEN = settings.TELEGRAM_TOKEN
-GAME_SHORT_NAME = 'gencates'
+GAME_SHORT_NAME = 'Gencates'
+GAME_URL = 'https://takumishiawase.github.io/genecats/'
 
 
 class CatViewSet(viewsets.ModelViewSet):
@@ -166,6 +167,7 @@ def telegram_webhook(request):
     if request.method == 'POST':
         try:
             update = json.loads(request.body)
+            print(f"Update received: {update}")  # Логирование обновлений
             if 'message' in update:
                 chat_id = update['message']['chat']['id']
                 text = update['message']['text']
@@ -176,27 +178,23 @@ def telegram_webhook(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'not allowed'})
 
-
 def handle_message(chat_id, text):
+    print(f"Handling message: {text} from chat_id: {chat_id}")  # Логирование сообщений
     if text == '/start':
         send_message(chat_id, 'Welcome to the game! Click /play to start.')
     elif text == '/play':
         start_game(chat_id)
-
 
 def send_message(chat_id, text):
     url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
     payload = {'chat_id': chat_id, 'text': text}
     requests.post(url, json=payload)
 
-
 def start_game(chat_id):
     url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendGame'
     payload = {'chat_id': chat_id, 'game_short_name': GAME_SHORT_NAME}
-    requests.post(url, json=payload)
+    response = requests.post(url, json=payload)
+    print(f"Start game response: {response.json()}")
 
-
-def start_game2(chat_id):
-    url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendGame'
-    payload = {'chat_id': chat_id, 'game_short_name': GAME_SHORT_NAME}
-    requests.post(url, json=payload)
+'''def start_demo(chat_id):
+     send_message(chat_id, f"Click the link to play the demo: {DEMO_URL}")'''

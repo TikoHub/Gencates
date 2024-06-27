@@ -1,38 +1,419 @@
-.App {
+@font-face {
+  font-family: 'Gluten';
+  src: url('./fonts/gluten.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+body {
+  font-family: 'Gluten';
+  margin: 0;
+}
+.game_page{
+  display: flex;
+  background: url('./asset/loading/fone.png');
+  background-size: cover;
+  min-height: 100vh;
+  max-height: 100%;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cat_avatar{
+  width: 228px;
+  height: 211px;
+  margin-top: 45px;
+  margin-bottom: 30px;
+}
+
+.game_view{
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  margin-top: 50px;
+}
+
+.loading_view{
+  color: white;
+  font-size: 16px;
+  margin-top: 12px;
+  font-weight: 800;
+
+}
+.welcome_view{
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 39px;
+  color: white;
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.landing_view{
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 39px;
+  color: white;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.info_block{
+  font-weight: 200;
+  margin-top: 15px;
+  font-size: 15px;
+  line-height: 19.5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
+  padding-left: 55px;
+  padding-right: 55px;
+  width: 292px;
+  height: 90px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cats_lvl{
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.cat_lvl{
+  width: 130px;
+  height: 260px;
+}
+.current_view{
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+.cat_lvl_container{
+  margin-top: 35px;
+}
+.bot_gold{
+  margin-top: 29px;
+}
+.cat_name{
+  font-weight: 200;
+  font-size: 15px;
+  color: white;
+  line-height: 19.5px;
+  margin-top: 23px;
+  display: flex;
+  text-align: center;
+  text-wrap: nowrap;
+  margin-left: -20px;
+}
+.progress-bar {
+  width: 190px;
+  height: 16px;
+  background-color: #290038;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.progress-bar_lvl {
+  width: 190px;
+  height: 16px;
+  background-color: #290038;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.progress_info_container{
+  display: flex;
+}
+.progress {
+  height: 100%;
+  background-color: #791C9E;
+  transition: width 0.3s ease-in-out;
+}
+.progress-text {
+  position: absolute;
+  left: 44%;
+  font-size: 14px;
+  margin-top: 5px;
+  color: white;
+  font-weight: 200;
+}
+.loading {
+  text-align: center;
+}
+
+.lvl_info_block{
+  font-size: 14px;
+  color: white;
+  font-weight: 200;
+  margin-top: 15px;
+}
+
+.referal_info{
+  font-size: 14px;
+  color: white;
+  font-weight: 200;
+  text-wrap: nowrap;
+}
+
+.ref_button{
+  all: unset;
+}
+.info_button{
+  all: unset;
+  margin-left: 5px;
+}
+
+.referal_block{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 34px;
+}
+
+.invite_button{
+  width: 66px;
+  height: 20px;
+  border: none;
+  background: #6A058A;
+  color: white;
+  font-size: 14px;
+  font-weight: 200;
+  border-radius: 20px;
+  font-family: 'Gluten';
+}
+
+.bonus_block{
+  margin-top: 40px;
+  width: 80%;
+  height: 100px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  color: #0F5272;
+  border: 2px solid #0F5272;
+  border-radius: 10px;
+}
+
+.welcome_info{
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 66px;
+  padding-right: 66px;
+  line-height: 20.8px;
+}
+
+.welcome_info_2{
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 80px;
+  padding-right: 80px;
+  line-height: 20.8px;
+}
+.fraction{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-left: 43px;
+  padding-right: 43px;
+}
+.fraction_item{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 125px;
+  border: none;
+  background: none;
+}
+.fraction_icon{
+  width: 70px;
+  height: 81px;
+}
+.fraction_icon_flask{
+  width: 47px;
+  height: 81px;
+}
+
+.fraction_text{
+  font-size: 16px;
   color: white;
+  font-weight: 400;
+  margin-top: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modal {
+  background-color: #000;
+  border-radius: 25px;
+  border: #333334 1px solid;
+  padding: 15px;
+  position: relative;
+  width: 256px;
+  height: 655px;
+}
+
+.modal-backdrop_fraction {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal_fraction {
+  background-color: #000;
+  border-radius: 25px;
+  border: #333334 1px solid;
+  padding: 15px;
+  position: relative;
+  width: 352px;
+  height: 172px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: #eee;
+}
+
+.close-icon {
+  color: white;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  font-size: 48px;
+  font-weight: 100;
+  line-height: 24px;
+}
+
+.modal_title{
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 20.8px;
+  margin: 40px 25px 0 25px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.friend_block{
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 19px;
+  font-size: 14px;
+}
+.modal_fraction_view{
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 15px;
+}
+.modal_fraction_buttons{
+  margin-top: 15px;
+  justify-content: space-between;
+  display: flex;
+  width: 230px;
+}
+
+.modal_fraction_button{
+  width: 100px;
+  height: 20px;
+  border-radius: 20px;
+  background: #BD00FF40;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+}
+.friend_bonus{
+  text-align: end;
+}
+
+.lawn_tile{
+  color: #ff9900;
+}
+.khao{
+  color: #ff9900;
+}
+.cat_house{
+  color: #ff9900;
+}
+.siamese{
+  color: #4558ff;
+}
+.maine_coon{
+  color: #4558ff;
+}
+.ragdoll{
+  color: #8f00ff;
+}
+.amethyst{
+  color: #cf93ff;
+}
+.peterbald{
+  color: #8f00ff;
+}
+.serengeti{
+  color: #8f00ff;
+}
+.british{
+  color: #ff00f5;
+}
+.bengal{
+  color: #ff00f5;
+}
+.sphynx{
+  color: #ff00f5;
 }
