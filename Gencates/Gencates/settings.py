@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '1dd3-5-251-138-54.ngrok-free.app', ]
+    '1dd3-5-251-138-54.ngrok-free.app/telegram-webhook/', ]
 
 
 # Application definition

@@ -59,12 +59,46 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coins = models.IntegerField(default=0)
     cats = models.ManyToManyField(Cat, related_name='owners')
-    level = models.IntegerField(default=1)
+    level = models.IntegerField(default=0)  # Начальный уровень 0
     referral_code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     referred_by = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
+    referrals_count = models.IntegerField(default=0)  # Количество приглашенных пользователей
+    telegram_user_id = models.CharField(max_length=50, blank=True, null=True)  # New field
 
     def __str__(self):
         return self.user.username
+
+    def increase_level(self):
+        levels = [
+            (1, {"coins": 1000, "reward": "Lawn tile"}),
+            (2, {"coins": 2500, "reward": "Siamese"}),
+            (5, {"coins": 5000, "reward": "Maine Coon"}),
+            (10, {"coins": 10000, "reward": "Ragdoll", "extra": "Amethyst"}),
+            (25, {"coins": 25000, "reward": "Peterbald", "extra": "5 amethysts"}),
+            (50, {"coins": 50000, "reward": "Serengeti", "extra": "20 amethysts"}),
+            (100, {"coins": 100000, "reward": "British Shorthair", "extra": "50 amethysts"}),
+            (500, {"coins": 500000, "reward": "Bengal", "extra": "100 amethysts", "extra2": "Lawn tile"}),
+            (2500, {"coins": 2500000, "reward": "Sphynx", "extra": "250 amethysts", "extra2": "Cat's house"}),
+            (10000, {"coins": 10000000, "reward": "Khao Manee", "extra": "Lawn tile", "extra2": "Cat's house", "extra3": "500 amethysts"})
+        ]
+
+        for req_friends, rewards in levels:
+            if self.referrals_count >= req_friends and self.level < req_friends:
+                self.coins += rewards["coins"]
+                self.level = req_friends
+                self.add_reward(rewards["reward"])
+                if "extra" in rewards:
+                    self.add_reward(rewards["extra"])
+                if "extra2" in rewards:
+                    self.add_reward(rewards["extra2"])
+                if "extra3" in rewards:
+                    self.add_reward(rewards["extra3"])
+                self.save()
+                break
+
+    def add_reward(self, reward_name):
+        reward_cat = Cat.objects.get(name=reward_name)
+        self.cats.add(reward_cat)
 
 
 class Incubator(models.Model):

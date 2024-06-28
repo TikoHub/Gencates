@@ -11,7 +11,7 @@ class CatSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ['user', 'coins', 'level', 'referral_code', 'referred_by', 'referrals_count']
 
 
 class IncubatorSerializer(serializers.ModelSerializer):

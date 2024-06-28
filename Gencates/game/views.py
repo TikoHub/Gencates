@@ -11,14 +11,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-import json
 from django.http import JsonResponse
-import requests
-
 TELEGRAM_BOT_TOKEN = settings.TELEGRAM_TOKEN
-GAME_SHORT_NAME = 'Gencates'
-GAME_URL = 'https://takumishiawase.github.io/genecats/'
+CHANNEL_USERNAME = '@Gene_Cats'
 
 
 class CatViewSet(viewsets.ModelViewSet):
@@ -132,13 +127,32 @@ class CatyCoinViewSet(viewsets.ModelViewSet):
         return Response({'status': 'coins subtracted', 'new_balance': coin.balance})
 
 
+def check_subscription(user_id):
+    url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getChatMember'
+    payload = {
+        'chat_id': CHANNEL_USERNAME,
+        'user_id': user_id
+    }
+    response = requests.get(url, params=payload)
+    data = response.json()
+
+    if data['ok']:
+        status = data['result']['status']
+        return status in ['member', 'administrator', 'creator']
+    return False
+
 @api_view(['GET'])
 def get_referral_link(request):
     user = request.user
     if not user.is_authenticated:
         return Response({'error': 'User not authenticated'}, status=400)
 
-    referral_link = f"http://127.0.0.1:3000/register?ref={user.userprofile.referral_code}"
+    telegram_user_id = user.profile.telegram_user_id  # Assuming you store Telegram user ID in the user's profile
+    if not check_subscription(telegram_user_id):
+        return Response({'error': 'You must subscribe to the channel first'}, status=400)
+
+    domain = 'http://127.0.0.1:8000'
+    referral_link = f"{domain}/register?ref={user.userprofile.referral_code}"
     return Response({'referral_link': referral_link})
 
 
@@ -150,51 +164,20 @@ def register_with_referral(request):
         return Response({'error': 'Invalid request'}, status=400)
 
     referrer = get_object_or_404(UserProfile, referral_code=referral_code)
-    user.userprofile.referred_by = referrer
-    user.userprofile.save()
+    user_profile = user.userprofile
+    user_profile.referred_by = referrer
+    user_profile.save()
 
-    # Example of adding bonus coins
+    # Увеличение уровня у реферера и добавление монет
     referrer.coins += 100
+    referrer.referrals_count += 1
+    referrer.increase_level()  # Увеличение уровня
     referrer.save()
-    user.userprofile.coins += 50
-    user.userprofile.save()
+
+    user_profile.coins += 50
+    forest_moggy = Cat.objects.get(name="Forest Moggy")
+    user_profile.cats.add(forest_moggy)
+    user_profile.save()
 
     return Response({'status': 'User registered with referral'})
 
-
-@csrf_exempt
-def telegram_webhook(request):
-    if request.method == 'POST':
-        try:
-            update = json.loads(request.body)
-            print(f"Update received: {update}")  # Логирование обновлений
-            if 'message' in update:
-                chat_id = update['message']['chat']['id']
-                text = update['message']['text']
-                handle_message(chat_id, text)
-            return JsonResponse({'status': 'ok'})
-        except Exception as e:
-            print(f"Error handling webhook: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    return JsonResponse({'status': 'not allowed'})
-
-def handle_message(chat_id, text):
-    print(f"Handling message: {text} from chat_id: {chat_id}")  # Логирование сообщений
-    if text == '/start':
-        send_message(chat_id, 'Welcome to the game! Click /play to start.')
-    elif text == '/play':
-        start_game(chat_id)
-
-def send_message(chat_id, text):
-    url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
-    payload = {'chat_id': chat_id, 'text': text}
-    requests.post(url, json=payload)
-
-def start_game(chat_id):
-    url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendGame'
-    payload = {'chat_id': chat_id, 'game_short_name': GAME_SHORT_NAME}
-    response = requests.post(url, json=payload)
-    print(f"Start game response: {response.json()}")
-
-'''def start_demo(chat_id):
-     send_message(chat_id, f"Click the link to play the demo: {DEMO_URL}")'''
